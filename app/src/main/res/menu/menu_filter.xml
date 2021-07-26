@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@drawable/icon_filter"
+        android:title="@string/title_filter"
+        app:iconTint="@color/white"
+        app:iconTintMode="src_atop"
+        app:showAsAction="always" />
+
+</menu>

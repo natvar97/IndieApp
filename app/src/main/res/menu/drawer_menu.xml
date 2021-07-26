@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/notesFragment"
+        android:icon="@drawable/notes"
+        android:title="@string/title_notes" />
+
+    <item
+        android:id="@+id/newsFragment"
+        android:icon="@drawable/newspaper"
+        android:title="@string/title_news" />
+
+    <item
+        android:id="@+id/dishesFragment"
+        android:icon="@drawable/food"
+        android:title="@string/title_dishes" />
+
+</menu>
