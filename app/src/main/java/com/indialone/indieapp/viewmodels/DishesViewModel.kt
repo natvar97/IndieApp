@@ -10,8 +10,9 @@ import com.indialone.indieapp.repositories.DishesRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DishesViewModel(
+class DishesViewModel @Inject constructor(
     private val dishesRepository: DishesRepository
 ) : ViewModel() {
 

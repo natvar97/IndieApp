@@ -1,20 +1,18 @@
 package com.indialone.indieapp.repositories
 
 import androidx.annotation.WorkerThread
+import com.indialone.indieapp.dishes.api.RecipeApiService
 import com.indialone.indieapp.dishes.api.RecipeRetrofitBuilder
+import javax.inject.Inject
 
-class DishesRepository {
-
-    @WorkerThread
-    suspend fun getRecipes(query: String) = RecipeRetrofitBuilder
-        .recipeApiService
-        .getRecipes(query)
-
+class DishesRepository @Inject constructor(private val recipeApiService: RecipeApiService) {
 
     @WorkerThread
-    suspend fun getRecipesDetails(rId: String) = RecipeRetrofitBuilder
-        .recipeApiService
-        .getRecipeDetails(rId)
+    suspend fun getRecipes(query: String) = recipeApiService.getRecipes(query)
+
+
+    @WorkerThread
+    suspend fun getRecipesDetails(rId: String) = recipeApiService.getRecipeDetails(rId)
 
 
 }

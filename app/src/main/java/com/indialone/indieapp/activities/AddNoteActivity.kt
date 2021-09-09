@@ -4,22 +4,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.indialone.indieapp.IndieApplication
 import com.indialone.indieapp.R
 import com.indialone.indieapp.databinding.ActivityAddNoteBinding
 import com.indialone.indieapp.notes.models.NoteEntity
 import com.indialone.indieapp.utils.Constants
 import com.indialone.indieapp.viewmodels.NotesViewModel
-import com.indialone.indieapp.viewmodels.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AddNoteActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityAddNoteBinding
-    private val mNoteViewModel: NotesViewModel by viewModels {
-        ViewModelFactory((application as IndieApplication).repository)
-    }
+
+    @Inject
+    lateinit var mNoteViewModel: NotesViewModel
+
     private var title: String = ""
     private var description: String = ""
     private var mNoteEdit: NoteEntity? = null

@@ -7,8 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.indialone.indieapp.notes.models.NoteEntity
 import com.indialone.indieapp.repositories.NotesRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NotesViewModel(
+class NotesViewModel @Inject constructor(
     private val notesRepository: NotesRepository
 ) : ViewModel() {
 

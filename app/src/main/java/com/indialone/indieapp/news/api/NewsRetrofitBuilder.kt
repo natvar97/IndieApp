@@ -4,15 +4,27 @@ import com.indialone.indieapp.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object NewsRetrofitBuilder {
+class NewsRetrofitBuilder {
 
-    private fun getInstance(): Retrofit {
+    companion object {
+        private var instance: NewsRetrofitBuilder? = null
+
+        fun getInstance(): NewsRetrofitBuilder {
+            if (instance == null) {
+                instance = NewsRetrofitBuilder()
+            }
+            return instance!!
+        }
+
+
+    }
+
+    fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.NEWS_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    val apiService = getInstance().create(ApiService::class.java)
 
 }

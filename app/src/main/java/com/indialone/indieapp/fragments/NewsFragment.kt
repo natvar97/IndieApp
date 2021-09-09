@@ -5,24 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.indialone.indieapp.IndieApplication
 import com.indialone.indieapp.adapters.NewsRvAdapter
 import com.indialone.indieapp.databinding.FragmentNewsBinding
 import com.indialone.indieapp.news.models.ArticlesItem
 import com.indialone.indieapp.viewmodels.NewsViewModel
-import com.indialone.indieapp.viewmodels.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsFragment : Fragment() {
 
     private lateinit var mBinding: FragmentNewsBinding
     private var news = ArrayList<ArticlesItem>()
-    private lateinit var newsRvAdapter: NewsRvAdapter
-    private val mNewsViewModel: NewsViewModel by viewModels {
-        ViewModelFactory((requireActivity().application as IndieApplication).repository)
-    }
+
+    @Inject
+    lateinit var newsRvAdapter: NewsRvAdapter
+
+    @Inject
+    lateinit var mNewsViewModel: NewsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,28 +42,28 @@ class NewsFragment : Fragment() {
     private fun getNews() {
 
         mNewsViewModel.getTopHeadlinesCountry().observe(viewLifecycleOwner) { newsEntity ->
-            news.addAll(newsEntity.articles as ArrayList<ArticlesItem>)
-            createRecyclerView(news)
+            newsRvAdapter.addData(newsEntity.articles as ArrayList<ArticlesItem>)
+            createRecyclerView()
         }
 
         mNewsViewModel.getTopHeadlinesTechCrunch().observe(viewLifecycleOwner) { newsEntity ->
-            news.addAll(newsEntity.articles as ArrayList<ArticlesItem>)
-            createRecyclerView(news)
+            newsRvAdapter.addData(newsEntity.articles as ArrayList<ArticlesItem>)
+            createRecyclerView()
         }
 
         mNewsViewModel.getEveryThingApple().observe(viewLifecycleOwner) { newsEntity ->
-            news.addAll(newsEntity.articles as ArrayList<ArticlesItem>)
-            createRecyclerView(news)
+            newsRvAdapter.addData(newsEntity.articles as ArrayList<ArticlesItem>)
+            createRecyclerView()
         }
 
         mNewsViewModel.getEveryThingTesla().observe(viewLifecycleOwner) { newsEntity ->
-            news.addAll(newsEntity.articles as ArrayList<ArticlesItem>)
-            createRecyclerView(news)
+            newsRvAdapter.addData(newsEntity.articles as ArrayList<ArticlesItem>)
+            createRecyclerView()
         }
 
         mNewsViewModel.getEverythingDomains().observe(viewLifecycleOwner) { newsEntity ->
             news.addAll(newsEntity.articles as ArrayList<ArticlesItem>)
-            createRecyclerView(news)
+            createRecyclerView()
         }
 
     }
@@ -81,9 +83,8 @@ class NewsFragment : Fragment() {
         }
     }
 
-    private fun createRecyclerView(news: ArrayList<ArticlesItem>) {
+    private fun createRecyclerView() {
         mBinding.rvNews.layoutManager = LinearLayoutManager(requireActivity())
-        newsRvAdapter = NewsRvAdapter(news)
         mBinding.rvNews.adapter = newsRvAdapter
     }
 

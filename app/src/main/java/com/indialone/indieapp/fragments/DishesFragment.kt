@@ -4,27 +4,30 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.indialone.indieapp.IndieApplication
 import com.indialone.indieapp.R
 import com.indialone.indieapp.adapters.CustomListItemAdapter
 import com.indialone.indieapp.adapters.DishesRvAdapter
 import com.indialone.indieapp.databinding.DialogCustomListBinding
 import com.indialone.indieapp.databinding.FragmentDishesBinding
-import com.indialone.indieapp.databinding.ItemCustomListLayoutBinding
 import com.indialone.indieapp.dishes.models.search.RecipesItem
 import com.indialone.indieapp.utils.Constants
 import com.indialone.indieapp.viewmodels.DishesViewModel
-import com.indialone.indieapp.viewmodels.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DishesFragment : Fragment() {
 
     private lateinit var mBinding: FragmentDishesBinding
     private lateinit var mCustomListDialog: Dialog
-    private val dishesViewModel: DishesViewModel by viewModels {
-        ViewModelFactory((activity?.application as IndieApplication).repository)
-    }
+
+    @Inject
+    lateinit var dishesViewModel: DishesViewModel
+
+    @Inject
+    lateinit var dishesAdapter: DishesRvAdapter
+
     private var selectionString: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +50,9 @@ class DishesFragment : Fragment() {
 
         dishesViewModel.getRecipes().observe(viewLifecycleOwner) { searchResponse ->
             mBinding.rvDishes.layoutManager = LinearLayoutManager(requireActivity())
-            mBinding.rvDishes.adapter =
-                DishesRvAdapter(searchResponse.recipes as ArrayList<RecipesItem>)
+            dishesAdapter.addData(searchResponse.recipes as ArrayList<RecipesItem>)
+            mBinding.rvDishes.adapter = dishesAdapter
+
         }
     }
 
@@ -93,8 +97,11 @@ class DishesFragment : Fragment() {
         dishesViewModel.fetchRecipes(selection)
         dishesViewModel.getRecipes().observe(viewLifecycleOwner) { searchResponse ->
             mBinding.rvDishes.layoutManager = LinearLayoutManager(requireActivity())
-            mBinding.rvDishes.adapter =
-                DishesRvAdapter(searchResponse.recipes as ArrayList<RecipesItem>)
+
+            dishesAdapter.addData(searchResponse.recipes as ArrayList<RecipesItem>)
+
+            mBinding.rvDishes.adapter = dishesAdapter
+
         }
         selectionString = selection
     }

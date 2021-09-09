@@ -1,5 +1,6 @@
 package com.indialone.indieapp.adapters
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +17,16 @@ import com.indialone.indieapp.databinding.NoteItemLayoutBinding
 import com.indialone.indieapp.fragments.NotesFragment
 import com.indialone.indieapp.notes.models.NoteEntity
 import com.indialone.indieapp.utils.Constants
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class NotesRvAdapter(
-    private val fragment: Fragment,
-    private val notes: ArrayList<NoteEntity>
+class NotesRvAdapter @Inject constructor(
+    @ApplicationContext private val context: Context
 ) : RecyclerView.Adapter<NotesRvAdapter.NotesRvViewHolder>() {
+
+    private val notes = ArrayList<NoteEntity>()
+    private var fragment = Fragment()
+
     class NotesRvViewHolder(itemView: NoteItemLayoutBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         private val tvTitle = itemView.tvTitle
@@ -49,15 +55,15 @@ class NotesRvAdapter(
             popMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_edit -> {
-                       val intent = Intent(fragment.activity, AddNoteActivity::class.java)
+                        val intent = Intent(context, AddNoteActivity::class.java)
                         intent.putExtra(Constants.NOTE_EXTRA, notes[position])
-                        fragment.startActivity(intent)
+                        context.startActivity(intent)
                         true
                     }
                     R.id.action_delete -> {
                         when (fragment) {
                             is NotesFragment -> {
-                                fragment.deleteNote(notes[position])
+                                (fragment as NotesFragment).deleteNote(notes[position])
                             }
                         }
                         true
@@ -77,4 +83,11 @@ class NotesRvAdapter(
     override fun getItemCount(): Int {
         return notes.size
     }
+
+    fun addData(list: List<NoteEntity>) {
+        notes.clear()
+        notes.addAll(list)
+        notifyDataSetChanged()
+    }
+
 }

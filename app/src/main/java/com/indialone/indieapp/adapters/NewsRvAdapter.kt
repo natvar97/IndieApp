@@ -2,19 +2,19 @@ package com.indialone.indieapp.adapters
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.indialone.indieapp.activities.WebViewActivity
 import com.indialone.indieapp.databinding.NewsItemLayoutBinding
 import com.indialone.indieapp.news.models.ArticlesItem
 import com.indialone.indieapp.utils.Constants
+import javax.inject.Inject
 
-class NewsRvAdapter(
-    private val news: ArrayList<ArticlesItem>
-) : RecyclerView.Adapter<NewsRvAdapter.NewsRvViewHolder>() {
+class NewsRvAdapter @Inject constructor() : RecyclerView.Adapter<NewsRvAdapter.NewsRvViewHolder>() {
+
+    private val news = ArrayList<ArticlesItem>()
+
     class NewsRvViewHolder(itemView: NewsItemLayoutBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         private val ivNews = itemView.ivImage
@@ -51,4 +51,11 @@ class NewsRvAdapter(
     override fun getItemCount(): Int {
         return news.size
     }
+
+    fun addData(list: List<ArticlesItem>) {
+        news.clear()
+        news.addAll(list)
+        notifyDataSetChanged()
+    }
+
 }

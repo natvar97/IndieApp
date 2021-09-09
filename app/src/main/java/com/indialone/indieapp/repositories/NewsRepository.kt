@@ -1,14 +1,15 @@
 package com.indialone.indieapp.repositories
 
 import androidx.annotation.WorkerThread
+import com.indialone.indieapp.news.api.NewsApiService
 import com.indialone.indieapp.news.api.NewsRetrofitBuilder
 import com.indialone.indieapp.utils.Constants
+import javax.inject.Inject
 
-class NewsRepository {
+class NewsRepository @Inject constructor(private val newsApiService: NewsApiService) {
 
     @WorkerThread
-    suspend fun getEveryThingDomains() = NewsRetrofitBuilder
-        .apiService
+    suspend fun getEveryThingDomains() = newsApiService
         .getEveryThingDomains(
             Constants.DOMAINS,
             Constants.API_KEY
@@ -16,8 +17,7 @@ class NewsRepository {
 
 
     @WorkerThread
-    suspend fun getTopHeadlinesTechCrunch() = NewsRetrofitBuilder
-        .apiService
+    suspend fun getTopHeadlinesTechCrunch() = newsApiService
         .getTopHeadlinesTechCrunch(
             Constants.TECH_CRUNCH,
             Constants.API_KEY
@@ -25,8 +25,7 @@ class NewsRepository {
 
 
     @WorkerThread
-    suspend fun getTopHeadlinesCountry() = NewsRetrofitBuilder
-        .apiService
+    suspend fun getTopHeadlinesCountry() = newsApiService
         .getTopHeadlinesCountry(
             Constants.COUNTRY,
             Constants.CATEGORY,
@@ -34,8 +33,7 @@ class NewsRepository {
         )
 
     @WorkerThread
-    suspend fun getEveryThingTesla() = NewsRetrofitBuilder
-        .apiService
+    suspend fun getEveryThingTesla() = newsApiService
         .getEveryThingTesla(
             Constants.Q,
             Constants.FROM,
@@ -44,8 +42,7 @@ class NewsRepository {
         )
 
     @WorkerThread
-    suspend fun getEveryThingApple() = NewsRetrofitBuilder
-        .apiService
+    suspend fun getEveryThingApple() = newsApiService
         .getEveryThingApple(
             Constants.Q_APPLE,
             Constants.FROM,

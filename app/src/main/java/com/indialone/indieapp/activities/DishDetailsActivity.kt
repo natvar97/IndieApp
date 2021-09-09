@@ -2,23 +2,23 @@ package com.indialone.indieapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.SyncStateContract
-import androidx.activity.viewModels
 import com.bumptech.glide.Glide
-import com.indialone.indieapp.IndieApplication
 import com.indialone.indieapp.R
 import com.indialone.indieapp.databinding.ActivityDishDetailsBinding
 import com.indialone.indieapp.utils.Constants
 import com.indialone.indieapp.viewmodels.DishesViewModel
-import com.indialone.indieapp.viewmodels.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class DishDetailsActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityDishDetailsBinding
     private var dishId: String = ""
-    private val mDishesViewModel: DishesViewModel by viewModels {
-        ViewModelFactory((application as IndieApplication).repository)
-    }
+
+    @Inject
+    lateinit var mDishesViewModel: DishesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

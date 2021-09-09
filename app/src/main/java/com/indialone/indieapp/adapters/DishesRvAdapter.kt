@@ -9,10 +9,13 @@ import com.indialone.indieapp.activities.DishDetailsActivity
 import com.indialone.indieapp.databinding.DishItemLayoutBinding
 import com.indialone.indieapp.dishes.models.search.RecipesItem
 import com.indialone.indieapp.utils.Constants
+import javax.inject.Inject
 
-class DishesRvAdapter(
-    private var dishes: ArrayList<RecipesItem>
-) : RecyclerView.Adapter<DishesRvAdapter.DishesRvViewHolder>() {
+class DishesRvAdapter @Inject constructor() :
+    RecyclerView.Adapter<DishesRvAdapter.DishesRvViewHolder>() {
+
+    private var dishes = ArrayList<RecipesItem>()
+
     class DishesRvViewHolder(itemView: DishItemLayoutBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         private val tvTitle = itemView.tvTitle
@@ -48,4 +51,11 @@ class DishesRvAdapter(
     override fun getItemCount(): Int {
         return dishes.size
     }
+
+    fun addData(list: List<RecipesItem>) {
+        dishes.clear()
+        dishes.addAll(list)
+        notifyDataSetChanged()
+    }
+
 }

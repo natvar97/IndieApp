@@ -11,7 +11,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.indialone.indieapp.R
 import com.indialone.indieapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
@@ -32,9 +34,9 @@ class MainActivity : AppCompatActivity() {
             drawerLayout = mBinding.drawerLayout
         )
 
+        setupActionBarWithNavController(navController, appBarConfiguration)
         mBinding.navigationView.setupWithNavController(navController)
 
-        setupActionBarWithNavController( navController, appBarConfiguration)
 //        NavigationUI.setupWithNavController(mBinding.navigationView, navController)
     }
 

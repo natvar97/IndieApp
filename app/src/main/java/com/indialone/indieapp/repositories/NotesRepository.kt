@@ -4,8 +4,9 @@ import androidx.annotation.WorkerThread
 import com.indialone.indieapp.notes.database.NoteDao
 import com.indialone.indieapp.notes.models.NoteEntity
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class NotesRepository(
+class NotesRepository @Inject constructor(
     private val noteDao : NoteDao
 ) {
 

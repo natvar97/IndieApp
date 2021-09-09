@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.concurrent.CompletionStage
 
-interface ApiService {
+interface NewsApiService {
 
     @GET(Constants.ENDPOINT_EVERYTHING)
     suspend fun getEveryThingDomains(
